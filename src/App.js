@@ -93,8 +93,8 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="mt-16 text-center text-sm text-gray-400">
-        Progetto sviluppato da Riccardo F. & ChatGPT
+      <footer className="mt-10 text-center text-sm text-gray-400 italic">
+        Architectura Microservorum – Riccardus et ChatGPT me fecērunt
       </footer>
     </div>
   );
