@@ -12,8 +12,12 @@ const Sidebar = ({ onClose, isMobile }) => {
   ];
 
   const handleClick = (item) => {
-    if (!item.active) alert("🚧 Funzionalità in arrivo...");
-    if (onClose) onClose();
+    if (item.active) {
+      if (onClose) onClose(); // Chiudi il menù mobile se clicco su “Registro strumenti”
+    } else {
+      alert("🚧 Funzionalità in arrivo...");
+      if (onClose) onClose(); // Chiudi comunque dopo alert
+    }
   };
 
   return (
