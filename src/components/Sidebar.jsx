@@ -1,6 +1,7 @@
-import React from 'react';
+// src/components/Sidebar.jsx
+import React from "react";
 
-const Sidebar = ({ current }) => {
+const Sidebar = ({ onClose, isMobile }) => {
   const menuItems = [
     { label: "Dashboard", active: false },
     { label: "Registro strumenti", active: true },
@@ -11,13 +12,12 @@ const Sidebar = ({ current }) => {
   ];
 
   const handleClick = (item) => {
-    if (!item.active) {
-      alert("🚧 Funzionalità in arrivo...");
-    }
+    if (!item.active) alert("🚧 Funzionalità in arrivo...");
+    if (onClose) onClose();
   };
 
   return (
-    <aside className="w-60 min-h-screen bg-white border-r p-4 hidden md:block">
+    <aside className="w-60 min-h-screen bg-white border-r p-4">
       <ul className="space-y-4">
         {menuItems.map((item) => (
           <li
@@ -30,6 +30,14 @@ const Sidebar = ({ current }) => {
           </li>
         ))}
       </ul>
+      {isMobile && (
+        <button
+          onClick={onClose}
+          className="mt-6 text-sm text-blue-500 underline"
+        >
+          Chiudi menu
+        </button>
+      )}
     </aside>
   );
 };
