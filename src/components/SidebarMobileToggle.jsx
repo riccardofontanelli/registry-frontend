@@ -15,10 +15,10 @@ export default function SidebarMobileToggle() {
       </div>
 
       {open && (
-        <div className="md:hidden fixed top-14 left-0 h-full w-60 bg-white border-r p-4 shadow-lg z-40">
-          <Sidebar onClose={() => setOpen(false)} />
-        </div>
-      )}
+  <div className="md:hidden fixed top-0 left-0 h-full w-60 bg-white border-r p-4 shadow-lg z-50">
+    <Sidebar onClose={() => setOpen(false)} isMobile />
+  </div>
+    )}
     </>
   );
 }

@@ -52,8 +52,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-zinc-100 font-sans flex flex-col md:flex-row">
-      <Sidebar className="hidden md:block" />
-      <SidebarMobileToggle />
+      <SidebarMobileToggle />  
+      
+      {/* Contenuto principale */}
       <main className="flex-1 p-6 mt-16 md:mt-0">
         <header className="bg-white text-gray-900 py-6 rounded-xl shadow-md mb-10 border border-gray-200">
           <h1 className="text-4xl font-bold text-center tracking-wide">Registro I-PHOQS</h1>
@@ -61,7 +62,11 @@ export default function App() {
   
         <div className="max-w-3xl mx-auto">
           <FormStrumento onAdd={aggiungiStrumento} />
-          <ListaStrumenti strumenti={strumenti} loading={loading} onDelete={handleDelete} />
+          <ListaStrumenti
+            strumenti={strumenti}
+            loading={loading}
+            onDelete={handleDelete}
+          />
         </div>
   
         <footer className="mt-10 text-center text-sm text-gray-400 italic">

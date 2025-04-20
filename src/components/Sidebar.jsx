@@ -13,13 +13,13 @@ const Sidebar = ({ onClose, isMobile }) => {
 
   const handleClick = (item) => {
     if (item.label === "Registro strumenti") {
-      if (onClose) onClose(); // Chiudi il menù mobile
+      if (typeof onClose === "function") onClose(); // chiudi menu mobile
     } else {
       alert("🚧 Funzionalità in arrivo...");
-      if (onClose) onClose();
+      if (typeof onClose === "function") onClose(); // chiudi menu mobile anche dopo alert
     }
   };
-    
+      
   return (
     <aside className="w-60 min-h-screen bg-white border-r p-4">
       <ul className="space-y-4">
