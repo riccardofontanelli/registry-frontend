@@ -32,11 +32,14 @@ export default function App() {
   };
 
   const handleDelete = async (id) => {
-    try {
+    const conferma = window.confirm("Sei sicuro di voler eliminare questo strumento?");
+    if (!conferma) return;
+
+     try {
       await fetch(`https://i-phoqs-registry.onrender.com/strumenti/${id}`, {
         method: "DELETE",
       });
-      fetchStrumenti();
+      fetchStrumenti(); // Ricarica la lista aggiornata
     } catch (err) {
       console.error("Errore eliminazione:", err);
     }
