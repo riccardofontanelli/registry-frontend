@@ -12,16 +12,14 @@ const Sidebar = ({ onClose, isMobile }) => {
   ];
 
   const handleClick = (item) => {
-    if (item.active) {
-      // Se è la voce attiva (es. "Registro strumenti"), chiudo il menù mobile
-      if (onClose) onClose();
+    if (item.label === "Registro strumenti") {
+      if (onClose) onClose(); // Chiudi il menù mobile
     } else {
-      // Altrimenti mostro il messaggio "Coming soon..." e chiudo lo stesso
       alert("🚧 Funzionalità in arrivo...");
       if (onClose) onClose();
     }
   };
-  
+    
   return (
     <aside className="w-60 min-h-screen bg-white border-r p-4">
       <ul className="space-y-4">
