@@ -21,17 +21,16 @@ const Sidebar = ({ onClose, isMobile }) => {
   };
 
   return (
-    <aside className="w-60 min-h-screen bg-white dark:bg-zinc-800 border-r border-gray-200 dark:border-zinc-700 p-4">
+    <aside className="w-60 min-h-screen bg-white dark:bg-zinc-800 border-r dark:border-zinc-700 p-4">
       <ul className="space-y-4">
         {menuItems.map((item) => (
           <li
             key={item.label}
             onClick={() => handleClick(item)}
             className={`cursor-pointer p-3 rounded-lg text-sm font-medium transition 
-              ${
-                item.active
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700"
+              ${item.active
+                ? "bg-blue-600 text-white"
+                : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700"
               }`}
           >
             {item.label}
@@ -41,7 +40,7 @@ const Sidebar = ({ onClose, isMobile }) => {
       {isMobile && (
         <button
           onClick={onClose}
-          className="mt-6 text-sm text-blue-500 underline"
+          className="mt-6 text-sm text-blue-500 underline dark:text-blue-400"
         >
           Chiudi menu
         </button>
