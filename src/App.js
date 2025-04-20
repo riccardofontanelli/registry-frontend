@@ -28,12 +28,12 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome, laboratorio })
       });
-      await fetchStrumenti(); // <-- mettiamo anche await, meglio!
+      await fetchStrumenti();
     } catch (err) {
       console.error("Errore invio:", err);
     }
   };
-  
+
   const handleDelete = async (id) => {
     const confirm = window.confirm("Confermi la cancellazione dello strumento?");
     if (!confirm) return;
@@ -55,11 +55,14 @@ export default function App() {
     <div className={darkMode ? "dark" : ""}>
       <div className="min-h-screen font-sans flex flex-col md:flex-row bg-zinc-100 dark:bg-zinc-900 dark:text-gray-100">
         
+        {/* Sidebar mobile + desktop */}
         <SidebarMobileToggle />
-  
+        <div className="hidden md:block">
+          <Sidebar isMobile={false} />
+        </div>
+
         {/* Contenuto principale */}
         <main className="flex-1 p-6 mt-16 md:mt-0">
-  
           <header className="bg-white dark:bg-zinc-800 dark:text-white text-gray-900 py-6 rounded-xl shadow-md mb-10 border border-gray-200 dark:border-zinc-700 relative">
             <h1 className="text-4xl font-bold text-center tracking-wide">
               Registro I-PHOQS
@@ -71,7 +74,7 @@ export default function App() {
               {darkMode ? "Light Mode" : "Dark Mode"}
             </button>
           </header>
-  
+
           <div className="max-w-3xl mx-auto">
             <FormStrumento onAdd={aggiungiStrumento} />
             <ListaStrumenti
@@ -80,7 +83,7 @@ export default function App() {
               onDelete={handleDelete}
             />
           </div>
-  
+
           <footer className="mt-10 text-center text-sm text-gray-400 dark:text-gray-500 italic">
             Architectura Microservorum – Riccardus et ChatGPT me fecērunt
           </footer>
