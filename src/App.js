@@ -31,6 +31,17 @@ export default function App() {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`https://i-phoqs-registry.onrender.com/strumenti/${id}`, {
+        method: "DELETE",
+      });
+      fetchStrumenti();
+    } catch (err) {
+      console.error("Errore eliminazione:", err);
+    }
+  };   
+
   useEffect(() => {
     fetchStrumenti();
   }, []);
@@ -45,7 +56,7 @@ export default function App() {
 
       <div className="max-w-3xl mx-auto">
         <FormStrumento onAdd={aggiungiStrumento} />
-        <ListaStrumenti strumenti={strumenti} loading={loading} />
+        <ListaStrumenti strumenti={strumenti} loading={loading} onDelete={handleDelete} />
       </div>
 
       <footer className="mt-10 text-center text-sm text-gray-400 italic">
