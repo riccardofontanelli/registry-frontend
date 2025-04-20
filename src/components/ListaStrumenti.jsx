@@ -1,28 +1,22 @@
-import React from "react";
+import React from 'react';
 
-export default function ListaStrumenti({ strumenti, onDelete }) {
+const ListaStrumenti = ({ strumenti, onDelete }) => {
   if (strumenti.length === 0) {
-    return <p className="text-gray-500 text-center">Nessun strumento registrato al momento.</p>;
+    return (
+      <div className="text-center text-gray-500 mt-4">
+        Nessun strumento registrato al momento.
+      </div>
+    );
   }
 
   return (
-    <ul className="space-y-2">
-      {strumenti.map((s) => (
-        <li
-          key={s.id}
-          className="border p-3 rounded-md flex justify-between items-center hover:shadow-sm transition"
-        >
-          <div>
-            <strong>{s.nome}</strong> – {s.laboratorio}
-          </div>
+    <ul className="mt-4 space-y-2">
+      {strumenti.map((strumento) => (
+        <li key={strumento.id} className="bg-white p-4 rounded shadow flex justify-between items-center">
+          <span>{strumento.nome} - {strumento.laboratorio}</span>
           <button
-            onClick={() => {
-              if (window.confirm(`Eliminare "${s.nome}"?`)) {
-                onDelete(s.id);
-              }
-            }}
-            className="text-red-500 hover:text-red-700 transition text-lg font-bold"
-            title="Elimina"
+            onClick={() => onDelete(strumento.id)}
+            className="text-red-500 hover:text-red-700"
           >
             🗑️
           </button>
@@ -30,4 +24,6 @@ export default function ListaStrumenti({ strumenti, onDelete }) {
       ))}
     </ul>
   );
-}
+};
+
+export default ListaStrumenti;
