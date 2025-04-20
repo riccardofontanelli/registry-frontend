@@ -16,7 +16,7 @@ export default function SidebarMobileToggle() {
 
       {open && (
         <div className="md:hidden fixed top-14 left-0 h-full w-60 bg-white border-r p-4 shadow-lg z-40">
-          <Sidebar isMobile onClose={() => setOpen(false)} />
+          <Sidebar onClose={() => setOpen(false)} />
         </div>
       )}
     </>

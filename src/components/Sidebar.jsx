@@ -13,13 +13,15 @@ const Sidebar = ({ onClose, isMobile }) => {
 
   const handleClick = (item) => {
     if (item.active) {
-      if (onClose) onClose(); // Chiudi il menù mobile se clicco su “Registro strumenti”
+      // Se è la voce attiva (es. "Registro strumenti"), chiudo il menù mobile
+      if (onClose) onClose();
     } else {
+      // Altrimenti mostro il messaggio "Coming soon..." e chiudo lo stesso
       alert("🚧 Funzionalità in arrivo...");
-      if (onClose) onClose(); // Chiudi comunque dopo alert
+      if (onClose) onClose();
     }
   };
-
+  
   return (
     <aside className="w-60 min-h-screen bg-white border-r p-4">
       <ul className="space-y-4">
