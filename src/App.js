@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Sidebar from "./components/Sidebar";
 import FormStrumento from "./components/FormStrumento";
 import ListaStrumenti from "./components/ListaStrumenti";
 
@@ -18,53 +19,53 @@ export default function App() {
     setLoading(false);
   };
 
-  const aggiungiStrumento = async (payload) => {
+  const aggiungiStrumento = async ({ nome, laboratorio }) => {
     try {
       await fetch("https://i-phoqs-registry.onrender.com/strumenti", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ nome, laboratorio })
       });
-      fetchStrumenti();
+      await fetchStrumenti(); // <-- mettiamo anche await, meglio!
     } catch (err) {
       console.error("Errore invio:", err);
     }
   };
-
+  
   const handleDelete = async (id) => {
-    const conferma = window.confirm("Sei sicuro di voler eliminare questo strumento?");
-    if (!conferma) return;
-
-     try {
+    const confirm = window.confirm("Confermi la cancellazione dello strumento?");
+    if (!confirm) return;
+    try {
       await fetch(`https://i-phoqs-registry.onrender.com/strumenti/${id}`, {
-        method: "DELETE",
+        method: "DELETE"
       });
-      fetchStrumenti(); // Ricarica la lista aggiornata
+      fetchStrumenti();
     } catch (err) {
-      console.error("Errore eliminazione:", err);
+      console.error("Errore cancellazione:", err);
     }
-  };   
+  };
 
   useEffect(() => {
     fetchStrumenti();
   }, []);
 
   return (
-    <div className="min-h-screen bg-zinc-100 p-6 font-sans">
-      <header className="bg-white text-gray-900 py-6 rounded-xl shadow-md mb-10 border border-gray-200">
-        <h1 className="text-4xl font-bold text-center tracking-wide">
-          Registro I-PHOQS
-        </h1>
-      </header>
+    <div className="min-h-screen bg-zinc-100 font-sans flex">
+      <Sidebar />
+      <main className="flex-1 p-6">
+        <header className="bg-white text-gray-900 py-6 rounded-xl shadow-md mb-10 border border-gray-200">
+          <h1 className="text-4xl font-bold text-center tracking-wide">Registro I-PHOQS</h1>
+        </header>
 
-      <div className="max-w-3xl mx-auto">
-        <FormStrumento onAdd={aggiungiStrumento} />
-        <ListaStrumenti strumenti={strumenti} loading={loading} onDelete={handleDelete} />
-      </div>
+        <div className="max-w-3xl mx-auto">
+          <FormStrumento onAdd={aggiungiStrumento} />
+          <ListaStrumenti strumenti={strumenti} loading={loading} onDelete={handleDelete} />
+        </div>
 
-      <footer className="mt-10 text-center text-sm text-gray-400 italic">
-        Architectura Microservorum – Riccardus et ChatGPT me fecērunt
-      </footer>
+        <footer className="mt-10 text-center text-sm text-gray-400 italic">
+          Architectura Microservorum – Riccardus et ChatGPT me fecērunt
+        </footer>
+      </main>
     </div>
   );
 }
