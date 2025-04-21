@@ -3,11 +3,13 @@ import Sidebar from "./components/Sidebar";
 import SidebarMobileToggle from "./components/SidebarMobileToggle";
 import FormStrumento from "./components/FormStrumento";
 import ListaStrumenti from "./components/ListaStrumenti";
+import Login from "./pages/Login";
 
 export default function App() {
   const [strumenti, setStrumenti] = useState([]);
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem("loggedIn") === "true");
 
   const fetchStrumenti = async () => {
     setLoading(true);
@@ -51,28 +53,40 @@ export default function App() {
     fetchStrumenti();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("loggedIn");
+    setLoggedIn(false);
+  };
+
+  if (!loggedIn) {
+    return <Login onLogin={() => setLoggedIn(true)} />;
+  }
+
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className="min-h-screen font-sans flex flex-col md:flex-row bg-zinc-100 dark:bg-zinc-900 dark:text-gray-100">
-        
-        {/* Sidebar mobile + desktop */}
         <SidebarMobileToggle />
         <div className="hidden md:block">
-          <Sidebar isMobile={false} />
+          <Sidebar />
         </div>
 
-        {/* Contenuto principale */}
         <main className="flex-1 p-6 mt-16 md:mt-0">
           <header className="bg-white dark:bg-zinc-800 dark:text-white text-gray-900 py-6 rounded-xl shadow-md mb-10 border border-gray-200 dark:border-zinc-700 relative">
-            <h1 className="text-4xl font-bold text-center tracking-wide">
-              Registro I-PHOQS
-            </h1>
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="absolute top-4 right-4 text-sm px-3 py-1 rounded border border-gray-300 dark:border-gray-500 bg-white dark:bg-zinc-800 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-zinc-700 transition"
-            >
-              {darkMode ? "Light Mode" : "Dark Mode"}
-            </button>
+            <h1 className="text-4xl font-bold text-center tracking-wide">Registro I-PHOQS</h1>
+            <div className="absolute top-4 right-4 flex gap-3">
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="text-sm px-3 py-1 rounded border border-gray-300 dark:border-gray-500 bg-white dark:bg-zinc-800 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-zinc-700 transition"
+              >
+                {darkMode ? "Light Mode" : "Dark Mode"}
+              </button>
+              <button
+                onClick={handleLogout}
+                className="text-sm px-3 py-1 rounded border border-red-400 bg-red-100 text-red-700 hover:bg-red-200 transition"
+              >
+                Logout
+              </button>
+            </div>
           </header>
 
           <div className="max-w-3xl mx-auto">
