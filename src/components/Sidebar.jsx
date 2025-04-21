@@ -38,13 +38,32 @@ const Sidebar = ({ onClose, isMobile }) => {
         ))}
       </ul>
       {isMobile && (
-        <button
-          onClick={onClose}
-          className="mt-6 text-sm text-blue-500 underline dark:text-blue-400"
-        >
-          Chiudi menu
-        </button>
-      )}
+      {/* Pulsanti extra visibili solo su mobile */}
+        {isMobile && (
+            <div className="mt-8 space-y-2">
+            <button
+                onClick={() => {
+                if (typeof window !== "undefined") {
+                    const event = new CustomEvent("toggleDarkMode");
+                    window.dispatchEvent(event);
+                }
+                }}
+                className="w-full py-2 bg-gray-100 dark:bg-zinc-700 text-sm rounded hover:bg-gray-200 dark:hover:bg-zinc-600 transition"
+            >
+                🌗 Cambia tema
+            </button>
+        
+            <button
+                onClick={() => {
+                localStorage.removeItem("loggedIn");
+                window.location.reload();
+                }}
+                className="w-full py-2 bg-red-100 text-red-700 text-sm rounded hover:bg-red-200 transition"
+            >
+                🚪 Logout
+            </button>
+            </div>
+        )}
     </aside>
   );
 };
