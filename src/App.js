@@ -49,14 +49,18 @@ export default function App() {
     }
   };
 
-  useEffect(() => {
-    fetchStrumenti();
-  }, []);
-
   const handleLogout = () => {
     localStorage.removeItem("loggedIn");
     setLoggedIn(false);
   };
+
+  useEffect(() => {
+    fetchStrumenti();
+
+    const listener = () => setDarkMode((prev) => !prev);
+    window.addEventListener("toggleDarkMode", listener);
+    return () => window.removeEventListener("toggleDarkMode", listener);
+  }, []);
 
   if (!loggedIn) {
     return <Login onLogin={() => setLoggedIn(true)} />;
@@ -73,7 +77,9 @@ export default function App() {
         <main className="flex-1 p-6 mt-16 md:mt-0">
           <header className="bg-white dark:bg-zinc-800 dark:text-white text-gray-900 py-6 rounded-xl shadow-md mb-10 border border-gray-200 dark:border-zinc-700 relative">
             <h1 className="text-4xl font-bold text-center tracking-wide">Registro I-PHOQS</h1>
-            <div className="absolute top-4 right-4 flex gap-3">
+
+            {/* Pulsanti solo su desktop */}
+            <div className="absolute top-4 right-4 gap-3 hidden md:flex">
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className="text-sm px-3 py-1 rounded border border-gray-300 dark:border-gray-500 bg-white dark:bg-zinc-800 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-zinc-700 transition"
