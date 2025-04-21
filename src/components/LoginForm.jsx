@@ -9,14 +9,14 @@ export default function LoginForm({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username === "admin" && password === "iphqs2025") {
-      localStorage.setItem("iphqs_token", "yes");
+      localStorage.setItem("loggedIn", "true");  // <<< questo è il fix
       onLogin();
     } else {
       setErrore(true);
       setTimeout(() => setErrore(false), 3000);
     }
   };
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 font-sans p-6">
       <form onSubmit={handleSubmit} className="bg-white dark:bg-zinc-800 p-6 rounded-xl shadow-md w-full max-w-sm space-y-4">
