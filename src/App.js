@@ -4,6 +4,7 @@ import SidebarMobileToggle from "./components/SidebarMobileToggle";
 import FormStrumento from "./components/FormStrumento";
 import ListaStrumenti from "./components/ListaStrumenti";
 import Login from "./pages/Login";
+import { esportaCSV } from "./utils/exportCSV";
 
 export default function App() {
   const [strumenti, setStrumenti] = useState([]);
@@ -67,6 +68,11 @@ export default function App() {
     return <Login onLogin={() => setLoggedIn(true)} />;
   }
 
+  const strumentiFiltrati = strumenti.filter(s =>
+    s.nome.toLowerCase().includes(query.toLowerCase()) ||
+    s.laboratorio.toLowerCase().includes(query.toLowerCase())
+  );
+
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className="min-h-screen font-sans flex flex-col md:flex-row bg-zinc-100 dark:bg-zinc-900 dark:text-gray-100">
@@ -99,19 +105,24 @@ export default function App() {
               <>
                 <FormStrumento onAdd={aggiungiStrumento} />
 
-                <input
-                  type="text"
-                  placeholder="Cerca per nome o laboratorio..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="mb-6 mt-2 p-3 border border-gray-300 rounded-xl w-full dark:bg-zinc-700 dark:text-white"
-                />
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 mt-2">
+                  <input
+                    type="text"
+                    placeholder="Cerca per nome o laboratorio..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    className="p-3 border border-gray-300 rounded-xl w-full md:w-3/4 dark:bg-zinc-700 dark:text-white"
+                  />
+                  <button
+                    onClick={() => esportaCSV(strumentiFiltrati)}
+                    className="py-3 px-4 bg-green-600 text-white rounded-xl hover:bg-green-700 transition w-full md:w-auto"
+                  >
+                    Esporta CSV
+                  </button>
+                </div>
 
                 <ListaStrumenti
-                  strumenti={strumenti.filter(s =>
-                    s.nome.toLowerCase().includes(query.toLowerCase()) ||
-                    s.laboratorio.toLowerCase().includes(query.toLowerCase())
-                  )}
+                  strumenti={strumentiFiltrati}
                   loading={loading}
                   onDelete={handleDelete}
                 />
