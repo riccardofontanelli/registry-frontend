@@ -9,7 +9,7 @@ export default function App() {
   const [strumenti, setStrumenti] = useState([]);
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(localStorage.getItem("loggedIn") === "true");
+  const [loggedIn, setLoggedIn] = useState(() => localStorage.getItem("loggedIn") === "true");
 
   const fetchStrumenti = async () => {
     setLoading(true);
