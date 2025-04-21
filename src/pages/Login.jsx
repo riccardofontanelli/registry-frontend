@@ -6,7 +6,7 @@ export default function Login({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === "admin" && password === "i-phoqs") {
+    if (username === "admin" && password === "iphqs2025") {
       localStorage.setItem("loggedIn", "true");
       onLogin();
     } else {
