@@ -10,7 +10,8 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [loggedIn, setLoggedIn] = useState(() => localStorage.getItem("loggedIn") === "true");
-  const [view, setView] = useState("registro"); // "registro" | "catalogo"
+  const [view, setView] = useState("registro");
+  const [query, setQuery] = useState("");
 
   const fetchStrumenti = async () => {
     setLoading(true);
@@ -57,7 +58,6 @@ export default function App() {
 
   useEffect(() => {
     fetchStrumenti();
-
     const listener = () => setDarkMode((prev) => !prev);
     window.addEventListener("toggleDarkMode", listener);
     return () => window.removeEventListener("toggleDarkMode", listener);
@@ -70,7 +70,6 @@ export default function App() {
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className="min-h-screen font-sans flex flex-col md:flex-row bg-zinc-100 dark:bg-zinc-900 dark:text-gray-100">
-
         <SidebarMobileToggle setView={setView} />
         <div className="hidden md:block">
           <Sidebar setView={setView} />
@@ -99,7 +98,23 @@ export default function App() {
             {view === "registro" && (
               <>
                 <FormStrumento onAdd={aggiungiStrumento} />
-                <ListaStrumenti strumenti={strumenti} loading={loading} onDelete={handleDelete} />
+
+                <input
+                  type="text"
+                  placeholder="Cerca per nome o laboratorio..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="mb-6 mt-2 p-3 border border-gray-300 rounded-xl w-full dark:bg-zinc-700 dark:text-white"
+                />
+
+                <ListaStrumenti
+                  strumenti={strumenti.filter(s =>
+                    s.nome.toLowerCase().includes(query.toLowerCase()) ||
+                    s.laboratorio.toLowerCase().includes(query.toLowerCase())
+                  )}
+                  loading={loading}
+                  onDelete={handleDelete}
+                />
               </>
             )}
 
