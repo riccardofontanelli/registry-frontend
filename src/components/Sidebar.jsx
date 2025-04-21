@@ -1,23 +1,23 @@
 // src/components/Sidebar.jsx
 import React from "react";
 
-const Sidebar = ({ onClose, isMobile }) => {
+const Sidebar = ({ onClose, isMobile, setView }) => {
   const menuItems = [
-    { label: "Dashboard", active: false },
-    { label: "Registro strumenti", active: true },
-    { label: "Catalogo dei Servizi I-PHOQS", active: false },
-    { label: "Autenticazione", active: false },
-    { label: "Statistiche", active: false },
-    { label: "Esporta", active: false },
+    { label: "Registro strumenti", view: "registro", active: true },
+    { label: "Catalogo dei Servizi I-PHOQS", view: "catalogo", active: false },
+    { label: "Autenticazione", view: null },
+    { label: "Statistiche", view: null },
+    { label: "Esporta", view: null },
   ];
 
   const handleClick = (item) => {
-    if (item.label === "Registro strumenti") {
-      if (typeof onClose === "function") onClose();
+    if (item.view) {
+      setView(item.view);
     } else {
       alert("🚧 Funzionalità in arrivo...");
-      if (typeof onClose === "function") onClose();
     }
+
+    if (typeof onClose === "function") onClose();
   };
 
   return (
@@ -28,10 +28,9 @@ const Sidebar = ({ onClose, isMobile }) => {
             key={item.label}
             onClick={() => handleClick(item)}
             className={`cursor-pointer p-3 rounded-lg text-sm font-medium transition 
-              ${
-                item.active
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700"
+              ${item.active
+                ? "bg-blue-600 text-white"
+                : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700"
               }`}
           >
             {item.label}

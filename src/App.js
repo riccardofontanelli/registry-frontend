@@ -10,6 +10,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [loggedIn, setLoggedIn] = useState(() => localStorage.getItem("loggedIn") === "true");
+  const [view, setView] = useState("registro"); // "registro" | "catalogo"
 
   const fetchStrumenti = async () => {
     setLoading(true);
@@ -69,16 +70,15 @@ export default function App() {
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className="min-h-screen font-sans flex flex-col md:flex-row bg-zinc-100 dark:bg-zinc-900 dark:text-gray-100">
-        <SidebarMobileToggle />
+
+        <SidebarMobileToggle setView={setView} />
         <div className="hidden md:block">
-          <Sidebar />
+          <Sidebar setView={setView} />
         </div>
 
         <main className="flex-1 p-6 mt-16 md:mt-0">
           <header className="bg-white dark:bg-zinc-800 dark:text-white text-gray-900 py-6 rounded-xl shadow-md mb-10 border border-gray-200 dark:border-zinc-700 relative">
             <h1 className="text-4xl font-bold text-center tracking-wide">Registro I-PHOQS</h1>
-
-            {/* Pulsanti solo su desktop */}
             <div className="absolute top-4 right-4 gap-3 hidden md:flex">
               <button
                 onClick={() => setDarkMode(!darkMode)}
@@ -96,12 +96,28 @@ export default function App() {
           </header>
 
           <div className="max-w-3xl mx-auto">
-            <FormStrumento onAdd={aggiungiStrumento} />
-            <ListaStrumenti
-              strumenti={strumenti}
-              loading={loading}
-              onDelete={handleDelete}
-            />
+            {view === "registro" && (
+              <>
+                <FormStrumento onAdd={aggiungiStrumento} />
+                <ListaStrumenti strumenti={strumenti} loading={loading} onDelete={handleDelete} />
+              </>
+            )}
+
+            {view === "catalogo" && (
+              <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl shadow-md text-gray-800 dark:text-gray-100">
+                <h2 className="text-2xl font-bold mb-4">Catalogo dei Servizi I-PHOQS</h2>
+                <p className="mb-6">
+                  Qui comparirà l’elenco dei servizi dell’infrastruttura I-PHOQS:
+                  accesso ai laboratori, assistenza tecnica, formazione, PoC, challenge...
+                </p>
+                <button
+                  onClick={() => setView("registro")}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                >
+                  Torna al registro strumenti
+                </button>
+              </div>
+            )}
           </div>
 
           <footer className="mt-10 text-center text-sm text-gray-400 dark:text-gray-500 italic">
